@@ -1,6 +1,6 @@
 # XehInstaller
 
-The Xehcord Installer allows you to install [Xehcord, the cutest Discord Desktop client mod](https://github.com/7xeh/Xehcord)
+The Xehcord Installer allows you to install [Xehcord](https://github.com/7xeh/Xehcord)
 
 ![image](https://i.imgur.com/oHN41ss.png)
 
