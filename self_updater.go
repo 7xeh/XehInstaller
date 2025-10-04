@@ -46,7 +46,7 @@ func init() {
 }
 
 func GetInstallerDownloadLink() string {
-	const BaseUrl = "https://github.com/Xehcord/XehInstaller/releases/latest/download/"
+	const BaseUrl = "https://github.com/7xeh/XehInstaller/releases/latest/download/"
 	switch runtime.GOOS {
 	case "windows":
 		filename := Ternary(buildinfo.UiType == buildinfo.UiTypeCli, "XehInstallerCli.exe", "XehInstaller.exe")

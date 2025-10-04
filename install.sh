@@ -18,7 +18,7 @@ echo "Downloading Installer..."
 
 set -- "XDG_CONFIG_HOME=$XDG_CONFIG_HOME"
 
-curl -sS https://github.com/Xehcord/XehInstaller/releases/latest/download/XehInstallerCli-Linux \
+curl -sS https://github.com/7xeh/XehInstaller/releases/latest/download/XehInstallerCli-Linux \
   --output "$outfile" \
   --location \
   --fail

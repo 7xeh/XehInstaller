@@ -1,21 +1,21 @@
 # XehInstaller
 
-The Xehcord Installer allows you to install [Xehcord, the cutest Discord Desktop client mod](https://github.com/Xehcord/Xehcord)
+The Xehcord Installer allows you to install [Xehcord, the cutest Discord Desktop client mod](https://github.com/7xeh/Xehcord)
 
 ![image](https://i.imgur.com/oHN41ss.png)
 
 ## Usage
 
 Windows
-- [GUI](https://github.com/Xehcord/XehInstaller/releases/latest/download/XehInstaller.exe) 
-- [CLI](https://github.com/Xehcord/XehInstaller/releases/latest/download/XehInstallerCli.exe)
+- [GUI](https://github.com/7xeh/XehInstaller/releases/latest/download/XehInstaller.exe) 
+- [CLI](https://github.com/7xeh/XehInstaller/releases/latest/download/XehInstallerCli.exe)
 
 MacOS
-- [GUI](https://github.com/Xehcord/XehInstaller/releases/latest/download/XehInstaller.MacOS.zip)
+- [GUI](https://github.com/7xeh/XehInstaller/releases/latest/download/XehInstaller.MacOS.zip)
 
 Linux 
-- [GUI](https://github.com/Xehcord/XehInstaller/releases/latest/download/XehInstaller-x11)
-- [CLI](https://github.com/Xehcord/XehInstaller/releases/latest/download/XehInstallerCli-Linux)
+- [GUI](https://github.com/7xeh/XehInstaller/releases/latest/download/XehInstaller-x11)
+- [CLI](https://github.com/7xeh/XehInstaller/releases/latest/download/XehInstallerCli-Linux)
 ## Building from source
 
 ### Prerequisites 
@@ -71,4 +71,4 @@ go build --tags cli
 ```
 
 You might want to pass some flags to this command to get a better build.
-See [the GitHub workflow](https://github.com/Xehcord/XehInstaller/blob/main/.github/workflows/release.yml) for what flags I pass or if you want more precise instructions
+See [the GitHub workflow](https://github.com/7xeh/XehInstaller/blob/main/.github/workflows/release.yml) for what flags I pass or if you want more precise instructions

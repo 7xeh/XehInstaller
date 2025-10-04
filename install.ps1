@@ -1,4 +1,4 @@
-$link = "https://github.com/Xehcord/XehInstaller/releases/latest/download/XehInstallerCli.exe"
+$link = "https://github.com/7xeh/XehInstaller/releases/latest/download/XehInstallerCli.exe"
 
 $outfile = "$env:TEMP\XehInstallerCli.exe"
 

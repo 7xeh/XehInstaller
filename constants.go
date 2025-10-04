@@ -11,12 +11,12 @@ import (
 	"vencord/buildinfo"
 )
 
-const ReleaseUrl = "https://api.github.com/repos/Xehcord/Xehcord/releases/latest"
+const ReleaseUrl = "https://api.github.com/repos/7xeh/Xehcord/releases/latest"
 const ReleaseUrlFallback = "https://xehcord.org/releases/xehcord"
-const InstallerReleaseUrl = "https://api.github.com/repos/Xehcord/XehInstaller/releases/latest"
+const InstallerReleaseUrl = "https://api.github.com/repos/7xeh/XehInstaller/releases/latest"
 const InstallerReleaseUrlFallback = "https://xehcord.org/releases/xehinstaller"
 
-var UserAgent = "XehInstaller/" + buildinfo.InstallerGitHash + " (https://github.com/Xehcord/XehInstaller)"
+var UserAgent = "XehInstaller/" + buildinfo.InstallerGitHash + " (https://github.com/7xeh/XehInstaller)"
 
 var (
 	DiscordGreen  = color.RGBA{R: 0x2D, G: 0x7C, B: 0x46, A: 0xFF}
