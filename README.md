@@ -2,7 +2,7 @@
 
 The Xehcord Installer allows you to install [Xehcord](https://github.com/7xeh/Xehcord)
 
-![image](https://i.imgur.com/oHN41ss.png)
+![image](https://cdn.discordapp.com/attachments/1234049336388882456/1423916004437655594/JCwiFRy.png?ex=68e20c9e&is=68e0bb1e&hm=f4c9db1a7a6be091314fc1bd01a388ff8c58e32b2bd44360c168e86ba7ecc3d9&)
 
 ## Usage
 
