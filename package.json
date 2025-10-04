@@ -1,0 +1,23 @@
+{
+  "name": "xehinstaller",
+  "version": "1.0.1",
+  "description": "Cross-platform installer for XehCord",
+  "scripts": {
+    "easyRelease": "pwsh -ExecutionPolicy Bypass -File ./easyRelease.ps1",
+    "easyRelease:bash": "bash ./easyRelease.sh",
+    "build": "go build -tags static,gui -ldflags=\"-H windowsgui\" -o XehInstaller.exe",
+    "build:cli": "go build -tags static,cli -o XehInstallerCli.exe"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/7xeh/XehInstaller.git"
+  },
+  "keywords": [
+    "discord",
+    "xehcord",
+    "installer",
+    "mod"
+  ],
+  "author": "7xeh",
+  "license": "GPL-3.0"
+}

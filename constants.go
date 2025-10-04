@@ -23,6 +23,15 @@ var (
 	DiscordRed    = color.RGBA{R: 0xEC, G: 0x41, B: 0x44, A: 0xFF}
 	DiscordBlue   = color.RGBA{R: 0x58, G: 0x65, B: 0xF2, A: 0xFF}
 	DiscordYellow = color.RGBA{R: 0xfe, G: 0xe7, B: 0x5c, A: 0xff}
+
+	// Purple Theme Colors
+	PurplePrimary   = color.RGBA{R: 0x9B, G: 0x59, B: 0xB6, A: 0xFF} // Main purple
+	PurpleSecondary = color.RGBA{R: 0x8E, G: 0x44, B: 0xAD, A: 0xFF} // Darker purple
+	PurpleAccent    = color.RGBA{R: 0xBB, G: 0x86, B: 0xFC, A: 0xFF} // Light purple
+	PurpleDanger    = color.RGBA{R: 0xE7, G: 0x4C, B: 0x3C, A: 0xFF} // Red for uninstall
+	DarkBg          = color.RGBA{R: 0x1A, G: 0x1A, B: 0x1A, A: 0xFF} // Dark background
+	DarkerBg        = color.RGBA{R: 0x0F, G: 0x0F, B: 0x0F, A: 0xFF} // Even darker
+	LightText       = color.RGBA{R: 0xE0, G: 0xE0, B: 0xE0, A: 0xFF} // Light text
 )
 
 var LinuxDiscordNames = []string{

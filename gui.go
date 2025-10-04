@@ -17,7 +17,7 @@ import (
 	"vencord/buildinfo"
 
 	g "github.com/AllenDang/giu"
-	"github.com/AllenDang/imgui-go"
+	imgui "github.com/AllenDang/imgui-go"
 
 	// png decoder for icon
 	_ "image/png"
@@ -299,58 +299,77 @@ func RawInfoModal(id, title, description string, isOpenAsar bool) g.Widget {
 	return g.Style().
 		SetStyle(g.StyleVarWindowPadding, 40, 35).
 		SetStyleFloat(g.StyleVarWindowRounding, 16).
+		SetColor(g.StyleColorPopupBg, DarkerBg).
+		SetColor(g.StyleColorBorder, PurplePrimary).
 		To(
 			g.PopupModal(id).
 				Flags(g.WindowFlagsNoTitleBar | Ternary(isDynamic, g.WindowFlagsAlwaysAutoResize, 0)).
 				Layout(
 					g.Align(g.AlignCenter).To(
-						g.Style().SetFontSize(32).To(
+						g.Style().SetFontSize(32).SetColor(g.StyleColorText, PurpleAccent).To(
 							g.Label(title),
 						),
 						g.Dummy(0, 15),
-						g.Style().SetFontSize(18).To(
+						g.Style().SetFontSize(18).SetColor(g.StyleColorText, LightText).To(
 							g.Label(description).Wrapped(isDynamic),
 						),
 						&CondWidget{id == "#scuffed-install", func() g.Widget {
 							return g.Column(
 								g.Dummy(0, 10),
-								g.Style().SetStyleFloat(g.StyleVarFrameRounding, 6).To(
-									g.Button("Take me there!").OnClick(func() {
-										// this issue only exists on windows so using Windows specific path is oki
-										username := os.Getenv("USERNAME")
-										programData := os.Getenv("PROGRAMDATA")
-										g.OpenURL("file://" + path.Join(programData, username))
-									}).Size(200, 35),
-								),
+								g.Style().
+									SetStyleFloat(g.StyleVarFrameRounding, 6).
+									SetColor(g.StyleColorButton, PurplePrimary).
+									SetColor(g.StyleColorButtonHovered, PurpleAccent).
+									To(
+										g.Button("Take me there!").OnClick(func() {
+											// this issue only exists on windows so using Windows specific path is oki
+											username := os.Getenv("USERNAME")
+											programData := os.Getenv("PROGRAMDATA")
+											g.OpenURL("file://" + path.Join(programData, username))
+										}).Size(200, 35),
+									),
 							)
 						}, nil},
 						g.Dummy(0, 20),
 						&CondWidget{isOpenAsar,
 							func() g.Widget {
-								return g.Style().SetStyleFloat(g.StyleVarFrameRounding, 6).To(
-									g.Row(
-										g.Button("Accept").
-											OnClick(func() {
-												acceptedOpenAsar = true
-												g.CloseCurrentPopup()
-											}).
-											Size(110, 35),
-										g.Button("Cancel").
-											OnClick(func() {
-												g.CloseCurrentPopup()
-											}).
-											Size(110, 35),
-									),
-								)
+								return g.Style().
+									SetStyleFloat(g.StyleVarFrameRounding, 6).
+									SetColor(g.StyleColorButton, PurplePrimary).
+									SetColor(g.StyleColorButtonHovered, PurpleAccent).
+									To(
+										g.Row(
+											g.Button("Accept").
+												OnClick(func() {
+													acceptedOpenAsar = true
+													g.CloseCurrentPopup()
+												}).
+												Size(110, 35),
+											g.Style().
+												SetColor(g.StyleColorButton, PurpleDanger).
+												SetColor(g.StyleColorButtonHovered, color.RGBA{R: 0xFF, G: 0x6B, B: 0x6B, A: 0xFF}).
+												To(
+													g.Button("Cancel").
+														OnClick(func() {
+															g.CloseCurrentPopup()
+														}).
+														Size(110, 35),
+												),
+										),
+									)
 							},
 							func() g.Widget {
-								return g.Style().SetStyleFloat(g.StyleVarFrameRounding, 6).To(
-									g.Button("Ok").
-										OnClick(func() {
-											g.CloseCurrentPopup()
-										}).
-										Size(110, 35),
-								)
+								return g.Style().
+									SetStyleFloat(g.StyleVarFrameRounding, 6).
+									SetColor(g.StyleColorButton, PurplePrimary).
+									SetColor(g.StyleColorButtonHovered, PurpleAccent).
+									To(
+										g.Button("Ok").
+											OnClick(func() {
+												g.CloseCurrentPopup()
+											}).
+											Size(110, 35),
+									)
 							},
 						},
 					),
@@ -436,7 +455,7 @@ func renderInstaller() g.Widget {
 
 	layout := g.Layout{
 		g.Dummy(0, 30),
-		
+
 		// Header section with modern styling
 		g.Align(g.AlignCenter).To(
 			g.Style().SetFontSize(42).To(
@@ -444,7 +463,7 @@ func renderInstaller() g.Widget {
 			),
 		),
 		g.Dummy(0, 10),
-		
+
 		g.Separator(),
 		g.Dummy(0, 20),
 

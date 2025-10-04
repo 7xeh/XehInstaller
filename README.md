@@ -72,3 +72,42 @@ go build --tags cli
 
 You might want to pass some flags to this command to get a better build.
 See [the GitHub workflow](https://github.com/7xeh/XehInstaller/blob/main/.github/workflows/release.yml) for what flags I pass or if you want more precise instructions
+
+## Creating a Release
+
+XehInstaller includes an easy release script similar to Xehcord's workflow. To create a new release:
+
+### Using pnpm (Recommended)
+
+```sh
+pnpm easyRelease
+```
+
+This interactive script will:
+- ✅ Check for uncommitted changes
+- ✅ Build and test both GUI and CLI versions
+- ✅ Create a git tag with your version
+- ✅ Push to GitHub and trigger automatic release builds
+- ✅ Guide you through the entire process
+
+### Manual Release
+
+If you prefer to do it manually:
+
+```sh
+# 1. Commit all changes
+git add .
+git commit -m "Prepare release v1.x.x"
+git push
+
+# 2. Create and push a tag
+git tag v1.x.x
+git push origin v1.x.x
+```
+
+The GitHub Actions workflow will automatically build for Windows, macOS, and Linux, then create a release with all executables.
+
+### Platform-Specific Scripts
+
+- **Windows/PowerShell**: `pwsh ./easyRelease.ps1`
+- **Linux/macOS/Bash**: `bash ./easyRelease.sh`
