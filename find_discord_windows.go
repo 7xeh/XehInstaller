@@ -8,12 +8,13 @@ package main
 
 import (
 	"errors"
-	"golang.org/x/sys/windows"
 	"os"
 	path "path/filepath"
 	"strings"
 	"sync"
 	"unsafe"
+
+	"golang.org/x/sys/windows"
 )
 
 var windowsNames = map[string]string{
@@ -90,27 +91,37 @@ func FindDiscords() []any {
 func PreparePatch(di *DiscordInstall) {
 	killLock.Lock()
 	defer killLock.Unlock()
-	
+
 	name := windowsNames[di.branch]
 	Log.Debug("Trying to kill", name)
-	pid := findProcessIdByName(name + ".exe")
-	if pid == 0 {
-		Log.Debug("Didn't find process matching name")
-		return
-	}
 
-	proc, err := os.FindProcess(int(pid))
-	if err != nil {
-		Log.Warn("Failed to find process with pid", pid)
-		return
-	}
+	// Try multiple times to ensure Discord is closed
+	for attempts := 0; attempts < 5; attempts++ {
+		pid := findProcessIdByName(name + ".exe")
+		if pid == 0 {
+			Log.Debug("Discord process not found")
+			return
+		}
 
-	err = proc.Kill()
-	if err != nil {
-		Log.Warn("Failed to kill", name+":", err)
-	} else {
-		Log.Debug("Waiting for", name, "to exit")
-		_, _ = proc.Wait()
+		proc, err := os.FindProcess(int(pid))
+		if err != nil {
+			Log.Warn("Failed to find process with pid", pid)
+			return
+		}
+
+		err = proc.Kill()
+		if err != nil {
+			Log.Warn("Failed to kill", name+":", err)
+		} else {
+			Log.Debug("Waiting for", name, "to exit")
+			proc.Wait()
+			// Small delay to ensure process is fully terminated
+			if attempts < 4 {
+				// Check again if process still exists
+				continue
+			}
+		}
+		break
 	}
 }
 

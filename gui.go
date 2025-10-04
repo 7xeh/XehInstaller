@@ -432,17 +432,6 @@ func renderInstaller() g.Widget {
 		g.Separator(),
 		g.Dummy(0, 5),
 
-		g.Style().SetFontSize(20).To(
-			renderErrorCard(
-				DiscordYellow,
-				"**Github** and **xehcord.org** are the only official places to get Xehcord. Any other site claiming to be us is malicious.\n"+
-					"If you downloaded from any other source, you should delete / uninstall everything immediately, run a malware scan and change your Discord password.",
-				90,
-			),
-		),
-
-		g.Dummy(0, 5),
-
 		g.Style().SetFontSize(30).To(
 			g.Label("Please select an install to patch"),
 		),
