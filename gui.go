@@ -80,7 +80,7 @@ func main() {
 		os.Setenv("GDK_DPI_SCALE", "1")
 	}
 
-	win = g.NewMasterWindow("XehInstaller", 1200, 800, linuxFlags)
+	win = g.NewMasterWindow("XehInstaller", 1000, 700, linuxFlags)
 
 	icon, _, err := image.Decode(bytes.NewReader(iconBytes))
 	if err != nil {
@@ -283,8 +283,8 @@ func makeRadioOnChange(i int) func() {
 
 func Tooltip(label string) g.Widget {
 	return g.Style().
-		SetStyle(g.StyleVarWindowPadding, 10, 8).
-		SetStyleFloat(g.StyleVarWindowRounding, 8).
+		SetStyle(g.StyleVarWindowPadding, 12, 10).
+		SetStyleFloat(g.StyleVarWindowRounding, 6).
 		To(
 			g.Tooltip(label),
 		)
@@ -297,53 +297,60 @@ func InfoModal(id, title, description string) g.Widget {
 func RawInfoModal(id, title, description string, isOpenAsar bool) g.Widget {
 	isDynamic := strings.HasPrefix(id, "#modal") && !strings.Contains(description, "\n")
 	return g.Style().
-		SetStyle(g.StyleVarWindowPadding, 30, 30).
-		SetStyleFloat(g.StyleVarWindowRounding, 12).
+		SetStyle(g.StyleVarWindowPadding, 40, 35).
+		SetStyleFloat(g.StyleVarWindowRounding, 16).
 		To(
 			g.PopupModal(id).
 				Flags(g.WindowFlagsNoTitleBar | Ternary(isDynamic, g.WindowFlagsAlwaysAutoResize, 0)).
 				Layout(
 					g.Align(g.AlignCenter).To(
-						g.Style().SetFontSize(30).To(
+						g.Style().SetFontSize(32).To(
 							g.Label(title),
 						),
-						g.Style().SetFontSize(20).To(
+						g.Dummy(0, 15),
+						g.Style().SetFontSize(18).To(
 							g.Label(description).Wrapped(isDynamic),
 						),
 						&CondWidget{id == "#scuffed-install", func() g.Widget {
 							return g.Column(
 								g.Dummy(0, 10),
-								g.Button("Take me there!").OnClick(func() {
-									// this issue only exists on windows so using Windows specific path is oki
-									username := os.Getenv("USERNAME")
-									programData := os.Getenv("PROGRAMDATA")
-									g.OpenURL("file://" + path.Join(programData, username))
-								}).Size(200, 30),
+								g.Style().SetStyleFloat(g.StyleVarFrameRounding, 6).To(
+									g.Button("Take me there!").OnClick(func() {
+										// this issue only exists on windows so using Windows specific path is oki
+										username := os.Getenv("USERNAME")
+										programData := os.Getenv("PROGRAMDATA")
+										g.OpenURL("file://" + path.Join(programData, username))
+									}).Size(200, 35),
+								),
 							)
 						}, nil},
 						g.Dummy(0, 20),
 						&CondWidget{isOpenAsar,
 							func() g.Widget {
-								return g.Row(
-									g.Button("Accept").
-										OnClick(func() {
-											acceptedOpenAsar = true
-											g.CloseCurrentPopup()
-										}).
-										Size(100, 30),
-									g.Button("Cancel").
-										OnClick(func() {
-											g.CloseCurrentPopup()
-										}).
-										Size(100, 30),
+								return g.Style().SetStyleFloat(g.StyleVarFrameRounding, 6).To(
+									g.Row(
+										g.Button("Accept").
+											OnClick(func() {
+												acceptedOpenAsar = true
+												g.CloseCurrentPopup()
+											}).
+											Size(110, 35),
+										g.Button("Cancel").
+											OnClick(func() {
+												g.CloseCurrentPopup()
+											}).
+											Size(110, 35),
+									),
 								)
 							},
 							func() g.Widget {
-								return g.Button("Ok").
-									OnClick(func() {
-										g.CloseCurrentPopup()
-									}).
-									Size(100, 30)
+								return g.Style().SetStyleFloat(g.StyleVarFrameRounding, 6).To(
+									g.Button("Ok").
+										OnClick(func() {
+											g.CloseCurrentPopup()
+										}).
+										Size(110, 35),
+								)
 							},
 						},
 					),
@@ -428,13 +435,23 @@ func renderInstaller() g.Widget {
 	}
 
 	layout := g.Layout{
-		g.Dummy(0, 20),
+		g.Dummy(0, 30),
+		
+		// Header section with modern styling
+		g.Align(g.AlignCenter).To(
+			g.Style().SetFontSize(42).To(
+				g.Label("XehInstaller"),
+			),
+		),
+		g.Dummy(0, 10),
+		
 		g.Separator(),
-		g.Dummy(0, 5),
+		g.Dummy(0, 20),
 
-		g.Style().SetFontSize(30).To(
+		g.Style().SetFontSize(24).To(
 			g.Label("Please select an install to patch"),
 		),
+		g.Dummy(0, 10),
 
 		&CondWidget{len(discords) == 0, func() g.Widget {
 			s := "No Discord installs found. You first need to install Discord."
@@ -444,7 +461,7 @@ func renderInstaller() g.Widget {
 			return g.Label(s)
 		}, nil},
 
-		g.Style().SetFontSize(20).To(
+		g.Style().SetFontSize(18).To(
 			g.RangeBuilder("Discords", discords, func(i int, v any) g.Widget {
 				d := v.(*DiscordInstall)
 				//goland:noinspection GoDeprecation
@@ -460,10 +477,11 @@ func renderInstaller() g.Widget {
 				OnChange(makeRadioOnChange(customChoiceIdx)),
 		),
 
-		g.Dummy(0, 5),
+		g.Dummy(0, 10),
 		g.Style().
 			SetStyle(g.StyleVarFramePadding, 16, 16).
-			SetFontSize(20).
+			SetStyleFloat(g.StyleVarFrameRounding, 8).
+			SetFontSize(18).
 			To(
 				g.InputText(&customDir).Hint("The custom location").
 					Size(w - 16).
@@ -507,21 +525,23 @@ func renderInstaller() g.Widget {
 			return g.Label(dir)
 		}),
 
-		g.Dummy(0, 20),
+		g.Dummy(0, 25),
 
-		g.Style().SetFontSize(20).To(
+		g.Style().SetFontSize(18).To(
 			g.Row(
 				g.Style().
 					SetColor(g.StyleColorButton, DiscordGreen).
+					SetStyleFloat(g.StyleVarFrameRounding, 8).
 					SetDisabled(GithubError != nil).
 					To(
 						g.Button("Install").
 							OnClick(handlePatch).
-							Size((w-40)/4, 50),
+							Size((w-50)/4, 55),
 						Tooltip("Patch the selected Discord Install"),
 					),
 				g.Style().
 					SetColor(g.StyleColorButton, DiscordBlue).
+					SetStyleFloat(g.StyleVarFrameRounding, 8).
 					SetDisabled(GithubError != nil).
 					To(
 						g.Button("Reinstall / Repair").
@@ -535,23 +555,25 @@ func renderInstaller() g.Widget {
 									}
 								}
 							}).
-							Size((w-40)/4, 50),
+							Size((w-50)/4, 55),
 						Tooltip("Reinstall & Update Xehcord"),
 					),
 				g.Style().
 					SetColor(g.StyleColorButton, DiscordRed).
+					SetStyleFloat(g.StyleVarFrameRounding, 8).
 					To(
 						g.Button("Uninstall").
 							OnClick(handleUnpatch).
-							Size((w-40)/4, 50),
+							Size((w-50)/4, 55),
 						Tooltip("Unpatch the selected Discord Install"),
 					),
 				g.Style().
 					SetColor(g.StyleColorButton, Ternary(isOpenAsar, DiscordRed, DiscordGreen)).
+					SetStyleFloat(g.StyleVarFrameRounding, 8).
 					To(
 						g.Button(Ternary(isOpenAsar, "Uninstall OpenAsar", Ternary(currentDiscord != nil, "Install OpenAsar", "(Un-)Install OpenAsar"))).
 							OnClick(handleOpenAsar).
-							Size((w-40)/4, 50),
+							Size((w-50)/4, 55),
 						Tooltip("Manage OpenAsar"),
 					),
 			),
@@ -586,8 +608,8 @@ func renderErrorCard(col color.Color, message string, height float32) g.Widget {
 	return g.Style().
 		SetColor(g.StyleColorChildBg, col).
 		SetStyleFloat(g.StyleVarAlpha, 0.9).
-		SetStyle(g.StyleVarWindowPadding, 10, 10).
-		SetStyleFloat(g.StyleVarChildRounding, 5).
+		SetStyle(g.StyleVarWindowPadding, 15, 12).
+		SetStyleFloat(g.StyleVarChildRounding, 10).
 		To(
 			g.Child().
 				Size(g.Auto, height).
