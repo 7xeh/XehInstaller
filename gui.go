@@ -659,13 +659,7 @@ func loop() {
 			}},
 		).
 		Layout(
-			g.Align(g.AlignCenter).To(
-				g.Style().SetFontSize(40).To(
-					g.Label("XehInstaller"),
-				),
-			),
-
-			g.Dummy(0, 20),
+			g.Dummy(0, 10),
 			g.Style().SetFontSize(20).To(
 				g.Row(
 					g.Label(Ternary(IsDevInstall, "Dev Install: ", "Xehcord will be downloaded to: ")+XehcordDirectory),
