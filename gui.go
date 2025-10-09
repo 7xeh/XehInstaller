@@ -454,23 +454,37 @@ func renderInstaller() g.Widget {
 	}
 
 	layout := g.Layout{
-		g.Dummy(0, 30),
-
-		// Header section with modern styling
-		g.Align(g.AlignCenter).To(
-			g.Style().SetFontSize(42).To(
-				g.Label("XehInstaller"),
-			),
-		),
-		g.Dummy(0, 10),
-
-		g.Separator(),
 		g.Dummy(0, 20),
 
-		g.Style().SetFontSize(24).To(
-			g.Label("Please select an install to patch"),
+		// Modern header with gradient effect
+		g.Align(g.AlignCenter).To(
+			g.Style().
+				SetFontSize(52).
+				SetColor(g.StyleColorText, PurpleAccent).
+				To(
+					g.Label("XehInstaller"),
+				),
 		),
-		g.Dummy(0, 10),
+		g.Dummy(0, 5),
+		
+		// Subtle separator with modern styling
+		g.Align(g.AlignCenter).To(
+			g.Style().
+				SetColor(g.StyleColorSeparator, color.RGBA{R: 0x7B, G: 0x48, B: 0x96, A: 0x80}).
+				To(
+					g.Separator(),
+				),
+		),
+		g.Dummy(0, 30),
+
+		// Section heading with modern font
+		g.Style().
+			SetFontSize(22).
+			SetColor(g.StyleColorText, LightText).
+			To(
+				g.Label("Please select an install to patch"),
+			),
+		g.Dummy(0, 15),
 
 		&CondWidget{len(discords) == 0, func() g.Widget {
 			s := "No Discord installs found. You first need to install Discord."
@@ -544,27 +558,30 @@ func renderInstaller() g.Widget {
 			return g.Label(dir)
 		}),
 
-		g.Dummy(0, 25),
+		g.Dummy(0, 30),
 
-		g.Style().SetFontSize(18).To(
+		// Modern button layout with improved spacing
+		g.Style().SetFontSize(17).To(
 			g.Row(
 				g.Style().
 					SetColor(g.StyleColorButton, PurplePrimary).
 					SetColor(g.StyleColorButtonHovered, PurpleAccent).
 					SetColor(g.StyleColorButtonActive, PurpleSecondary).
-					SetStyleFloat(g.StyleVarFrameRounding, 8).
+					SetStyleFloat(g.StyleVarFrameRounding, 12).
+					SetStyle(g.StyleVarFramePadding, 12, 16).
 					SetDisabled(GithubError != nil).
 					To(
 						g.Button("Install").
 							OnClick(handlePatch).
-							Size((w-50)/4, 55),
+							Size((w-60)/4, 60),
 						Tooltip("Patch the selected Discord Install"),
 					),
 				g.Style().
 					SetColor(g.StyleColorButton, PurpleSecondary).
 					SetColor(g.StyleColorButtonHovered, PurplePrimary).
 					SetColor(g.StyleColorButtonActive, PurpleAccent).
-					SetStyleFloat(g.StyleVarFrameRounding, 8).
+					SetStyleFloat(g.StyleVarFrameRounding, 12).
+					SetStyle(g.StyleVarFramePadding, 12, 16).
 					SetDisabled(GithubError != nil).
 					To(
 						g.Button("Reinstall / Repair").
@@ -578,29 +595,31 @@ func renderInstaller() g.Widget {
 									}
 								}
 							}).
-							Size((w-50)/4, 55),
+							Size((w-60)/4, 60),
 						Tooltip("Reinstall & Update Xehcord"),
 					),
 				g.Style().
 					SetColor(g.StyleColorButton, PurpleDanger).
 					SetColor(g.StyleColorButtonHovered, color.RGBA{R: 0xFF, G: 0x6B, B: 0x6B, A: 0xFF}).
 					SetColor(g.StyleColorButtonActive, color.RGBA{R: 0xC0, G: 0x39, B: 0x2B, A: 0xFF}).
-					SetStyleFloat(g.StyleVarFrameRounding, 8).
+					SetStyleFloat(g.StyleVarFrameRounding, 12).
+					SetStyle(g.StyleVarFramePadding, 12, 16).
 					To(
 						g.Button("Uninstall").
 							OnClick(handleUnpatch).
-							Size((w-50)/4, 55),
+							Size((w-60)/4, 60),
 						Tooltip("Unpatch the selected Discord Install"),
 					),
 				g.Style().
 					SetColor(g.StyleColorButton, Ternary(isOpenAsar, PurpleDanger, PurpleAccent)).
 					SetColor(g.StyleColorButtonHovered, Ternary(isOpenAsar, color.RGBA{R: 0xFF, G: 0x6B, B: 0x6B, A: 0xFF}, color.RGBA{R: 0xD4, G: 0xAA, B: 0xFF, A: 0xFF})).
 					SetColor(g.StyleColorButtonActive, Ternary(isOpenAsar, color.RGBA{R: 0xC0, G: 0x39, B: 0x2B, A: 0xFF}, PurplePrimary)).
-					SetStyleFloat(g.StyleVarFrameRounding, 8).
+					SetStyleFloat(g.StyleVarFrameRounding, 12).
+					SetStyle(g.StyleVarFramePadding, 12, 16).
 					To(
 						g.Button(Ternary(isOpenAsar, "Uninstall OpenAsar", Ternary(currentDiscord != nil, "Install OpenAsar", "(Un-)Install OpenAsar"))).
 							OnClick(handleOpenAsar).
-							Size((w-50)/4, 55),
+							Size((w-60)/4, 60),
 						Tooltip("Manage OpenAsar"),
 					),
 			),
@@ -674,7 +693,8 @@ func loop() {
 					g.Style().
 						SetColor(g.StyleColorButton, PurplePrimary).
 						SetColor(g.StyleColorButtonHovered, PurpleAccent).
-						SetStyle(g.StyleVarFramePadding, 4, 4).
+						SetStyleFloat(g.StyleVarFrameRounding, 8).
+						SetStyle(g.StyleVarFramePadding, 8, 10).
 						To(
 							g.Button("Open Directory").OnClick(func() {
 								g.OpenURL("file://" + path.Dir(XehcordDirectory))
