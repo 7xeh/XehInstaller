@@ -466,7 +466,7 @@ func renderInstaller() g.Widget {
 				),
 		),
 		g.Dummy(0, 5),
-		
+
 		// Subtle separator with modern styling
 		g.Align(g.AlignCenter).To(
 			g.Style().
