@@ -549,7 +549,9 @@ func renderInstaller() g.Widget {
 		g.Style().SetFontSize(18).To(
 			g.Row(
 				g.Style().
-					SetColor(g.StyleColorButton, DiscordGreen).
+					SetColor(g.StyleColorButton, PurplePrimary).
+					SetColor(g.StyleColorButtonHovered, PurpleAccent).
+					SetColor(g.StyleColorButtonActive, PurpleSecondary).
 					SetStyleFloat(g.StyleVarFrameRounding, 8).
 					SetDisabled(GithubError != nil).
 					To(
@@ -559,7 +561,9 @@ func renderInstaller() g.Widget {
 						Tooltip("Patch the selected Discord Install"),
 					),
 				g.Style().
-					SetColor(g.StyleColorButton, DiscordBlue).
+					SetColor(g.StyleColorButton, PurpleSecondary).
+					SetColor(g.StyleColorButtonHovered, PurplePrimary).
+					SetColor(g.StyleColorButtonActive, PurpleAccent).
 					SetStyleFloat(g.StyleVarFrameRounding, 8).
 					SetDisabled(GithubError != nil).
 					To(
@@ -578,7 +582,9 @@ func renderInstaller() g.Widget {
 						Tooltip("Reinstall & Update Xehcord"),
 					),
 				g.Style().
-					SetColor(g.StyleColorButton, DiscordRed).
+					SetColor(g.StyleColorButton, PurpleDanger).
+					SetColor(g.StyleColorButtonHovered, color.RGBA{R: 0xFF, G: 0x6B, B: 0x6B, A: 0xFF}).
+					SetColor(g.StyleColorButtonActive, color.RGBA{R: 0xC0, G: 0x39, B: 0x2B, A: 0xFF}).
 					SetStyleFloat(g.StyleVarFrameRounding, 8).
 					To(
 						g.Button("Uninstall").
@@ -587,7 +593,9 @@ func renderInstaller() g.Widget {
 						Tooltip("Unpatch the selected Discord Install"),
 					),
 				g.Style().
-					SetColor(g.StyleColorButton, Ternary(isOpenAsar, DiscordRed, DiscordGreen)).
+					SetColor(g.StyleColorButton, Ternary(isOpenAsar, PurpleDanger, PurpleAccent)).
+					SetColor(g.StyleColorButtonHovered, Ternary(isOpenAsar, color.RGBA{R: 0xFF, G: 0x6B, B: 0x6B, A: 0xFF}, color.RGBA{R: 0xD4, G: 0xAA, B: 0xFF, A: 0xFF})).
+					SetColor(g.StyleColorButtonActive, Ternary(isOpenAsar, color.RGBA{R: 0xC0, G: 0x39, B: 0x2B, A: 0xFF}, PurplePrimary)).
 					SetStyleFloat(g.StyleVarFrameRounding, 8).
 					To(
 						g.Button(Ternary(isOpenAsar, "Uninstall OpenAsar", Ternary(currentDiscord != nil, "Install OpenAsar", "(Un-)Install OpenAsar"))).
@@ -664,7 +672,8 @@ func loop() {
 				g.Row(
 					g.Label(Ternary(IsDevInstall, "Dev Install: ", "Xehcord will be downloaded to: ")+XehcordDirectory),
 					g.Style().
-						SetColor(g.StyleColorButton, DiscordBlue).
+						SetColor(g.StyleColorButton, PurplePrimary).
+						SetColor(g.StyleColorButtonHovered, PurpleAccent).
 						SetStyle(g.StyleVarFramePadding, 4, 4).
 						To(
 							g.Button("Open Directory").OnClick(func() {
@@ -686,7 +695,7 @@ func loop() {
 						}
 						return g.Label("Latest Xehcord Version: " + LatestHash)
 					}, func() g.Widget {
-						return renderErrorCard(DiscordRed, "Failed to fetch Info from GitHub: "+GithubError.Error(), 40)
+						return renderErrorCard(PurpleDanger, "Failed to fetch Info from GitHub: "+GithubError.Error(), 40)
 					},
 				},
 			),
